@@ -20,13 +20,13 @@ git clone https://github.com/cyber-sushi/ironmime
 cd ironmime
 cargo build --release
 ```
-Once Cargo is done compiling, you should find IronMime's executable inside `~/ironmime/target/release/`.\
+Once Cargo is done compiling, you should find IronMime's executable inside `~/ironmime/target/release/`.
 
 ## Running IronMime
 Make sure that the executable has permissions to run as a program with `chmod +x ironmime` or with Right Click > Properties > "allow executing as program" or something like that, depending on your file manager.
 
 To run IronMime, choose **one** of the following options:
-- **Run IronMime as a system service**
+- **Run IronMime as a system service**\
 Move the executable into `/usr/bin`.\
 Grab `ironmime.service` from this repo and edit the `User=` line with your username.\
 Move the file into `/etc/systemd/system`, then run `systemctl daemon-reload`.\
@@ -36,7 +36,7 @@ After this, you can start and stop IronMime with `systemctl start/stop ironmime`
 > When running as a systemd service, IronMime inherits your systemd user environment, not your shell environment (you can see it with `systemctl --user show-environment`).\
 If you need to pass env variables to it, do so by adding them to the unit file with `Environment=VARIABLE=value`.
 
-- **Run IronMime as a user service**
+- **Run IronMime as a user service**\
 Move the executable into `/usr/bin`.\
 Grab `ironmime.service` from this repo and remove the lines that start with `Group` and `User`.\
 Move the file into `/etc/systemd/user`, then run `systemctl --user daemon-reload`.\
@@ -46,7 +46,7 @@ After this, you can start and stop IronMime with `systemctl --user start/stop ir
 > [!CAUTION]
 > Running IronMime as a _user_ service instead of a _system_ service requires your user to be in the input group, which might be a security risk because it allows all applications to read your inputs.
 
-- **Run IronMime without systemd**
+- **Run IronMime without systemd**\
 Move the executable into `/usr/bin` or `~/.local/bin` (just make sure it's in `PATH`).\
 Add your user to the input group with `sudo usermod -aG input <username>` and reboot.\
 Call `ironmime` from a terminal, a script or from your compositor's config file.
@@ -66,7 +66,7 @@ There are three available gestures that you can use: `swipe`, `pinch` and `hold`
 | Gesture | Directions | Fingers |
 | :--- | :---: | :---: |
 | `swipe` | `left` `right` `up` `down `| `3` `4` |
-| `pinch | `in` `out` | `2` `3` `4` |
+| `pinch` | `in` `out` | `2` `3` `4` |
 | `hold` | `on` | `1` `2` `3` `4` |
 
 Examples:
@@ -93,6 +93,7 @@ hold on 3 = grim -g "$(slurp)" -t png - | wl-copy -t image/png
 IronMime can be used in combination with tools like [wtype](https://github.com/atx/wtype) or [xdotool](https://github.com/jordansissel/xdotool) to emulate keypresses and other actions.
 > [!WARNING]
 > Some gestures may already be bound to certain actions on your environment, e.g. `hold on 1` > Left Click, `pinch out 2` > Zoom in, etc. Look out for possible conflicts.
+
 > [!NOTE]
 > If you need to add comments to the config file, put them between the lines (like in the examples) and not at the end of the lines.
 
