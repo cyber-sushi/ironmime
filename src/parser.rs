@@ -137,6 +137,9 @@ fn copy_variables() -> bool {
         }
         if let (Err(env::VarError::NotPresent), Ok(_)) = (env::var("XDG_SESSION_TYPE"), env::var("WAYLAND_DISPLAY")) {
             env::set_var("XDG_SESSION_TYPE", "wayland")
+        } else if let (Err(env::VarError::NotPresent), Err(env::VarError::NotPresent)) = (env::var("DISPLAY"), env::var("WAYLAND_DISPLAY")) {
+            println!("Unable to detect display. Is your Wayland compositor or X server running?");
+            exit(0)
         }
         true
     } else {
