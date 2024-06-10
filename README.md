@@ -26,33 +26,23 @@ Once Cargo is done compiling, you should find IronMime's executable inside `~/ir
 Make sure that the executable has permissions to run as a program with `chmod +x ironmime` or with Right Click > Properties > "allow executing as program" or something like that, depending on your file manager.
 
 To run IronMime, choose **one** of the following options:
-- **Run IronMime as a system service**\
-Move the executable into `/usr/bin`.\
-Grab `ironmime.service` from this repo and edit the `User=` line with your username.\
-Move the file into `/etc/systemd/system`, then run `systemctl daemon-reload`.\
-After this, you can start and stop IronMime with `systemctl start/stop ironmime` or you can enable/disable it on startup with `systemctl enable/disable ironmime`. If you change the config files and you want the changes to take place, restart IronMime with `systemctl restart ironmime`.
+- **Run IronMime as a system service**
+    - Move the executable into `/usr/bin`.
+    - Grab `ironmime.service` from this repo and edit the `User=` line with your username.
+    - Move the service file into `/etc/systemd/system`, then run `systemctl daemon-reload`.
+    - Start and stop IronMime with `systemctl start/stop ironmime` or enable/disable it on startup with `systemctl enable/disable ironmime`. If you change the config file and you want the changes to take place, restart IronMime with `systemctl restart ironmime`.
 
 > [!NOTE]
 > When running as a systemd service, IronMime inherits your systemd user environment, not your shell environment (you can see it with `systemctl --user show-environment`).\
 If you need to pass env variables to it, do so by adding them to the unit file with `Environment=VARIABLE=value`.
 
-- **Run IronMime as a user service**\
-Move the executable into `/usr/bin`.\
-Grab `ironmime.service` from this repo and remove the lines that start with `Group` and `User`.\
-Move the file into `/etc/systemd/user`, then run `systemctl --user daemon-reload`.\
-Add your user to the input group with `sudo usermod -aG input <username>` and reboot.\
-After this, you can start and stop IronMime with `systemctl --user start/stop ironmime` or you can enable/disable it on startup with `systemctl --user enable/disable ironmime`. If you change the config files and you want the changes to take place, restart IronMime with `systemctl --user restart ironmime`.
+- **Run IronMime without systemd**
+    - Move the executable into `/usr/bin` or `~/.local/bin` (just make sure it's in `PATH`).
+    - Add your user to the input group with `sudo usermod -aG input <username>` and reboot.
+    - Call `ironmime` from a terminal, from a script or from your compositor's config file.
 
 > [!CAUTION]
-> Running IronMime as a _user_ service instead of a _system_ service requires your user to be in the input group, which might be a security risk because it allows all applications to read your inputs.
-
-- **Run IronMime without systemd**\
-Move the executable into `/usr/bin` or `~/.local/bin` (just make sure it's in `PATH`).\
-Add your user to the input group with `sudo usermod -aG input <username>` and reboot.\
-Call `ironmime` from a terminal, a script or from your compositor's config file.
-
-> [!CAUTION]
-> Running IronMime this way requires your user to be in the input group, which might be a security risk because it allows all applications to read your inputs.
+> Running IronMime this way requires your user to be in the input group, which might be a security risk because it allows all running applications to read your inputs.
 
 ## Configuration
 IronMime's config directory defaults to `$HOME/.config/ironmime/ironmime.conf` but it can be changed through the `IRONMIME_CONFIG` environment variable (if you run IronMime as a systemd service, add it directly to the systemd unit).
