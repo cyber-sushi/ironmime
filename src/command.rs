@@ -8,7 +8,7 @@ pub fn run_command(gesture: Gesture, config: &(HashMap<Gesture, String>, bool), 
         if let Some(command) = config.0.get(&gesture) {
             Command::new("sh")
                 .arg("-c")
-                .arg(format!("systemd-run --scope --user -M {}@ {}", user, command))
+                .arg(format!("systemd-run --user -M {}@ {}", user, command))
                 .stdin(Stdio::null())
                 .stdout(Stdio::null())
                 .stderr(Stdio::null())
